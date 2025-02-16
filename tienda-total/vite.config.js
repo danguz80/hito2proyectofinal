@@ -3,9 +3,8 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
-  base: '/hito2proyectofinal/tienda-total/', // Ruta base en GitHub Pages
+  base: '/hito2proyectofinal/', // SOLO el nombre del repositorio
   build: {
     outDir: 'dist',
-    assetsDir: 'assets', // Asegura que los assets estén en la raíz
   },
 });
