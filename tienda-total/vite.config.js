@@ -1,8 +1,11 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
 
-// https://vite.dev/config/
 export default defineConfig({
-  base: "hito2proyectofinal/tienda-total/",
-  plugins: [react()]
-})
+  plugins: [react()],
+  base: '/hito2proyectofinal/tienda-total/', // Asegura que las rutas sean correctas
+  build: {
+    outDir: 'dist',
+    assetsDir: 'assets',
+  },
+});

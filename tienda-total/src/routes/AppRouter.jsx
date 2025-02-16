@@ -1,4 +1,3 @@
-import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Home from "../pages/Home";
@@ -12,7 +11,7 @@ import "../index.css"; // Asegurar que los estilos globales se aplican
 
 const AppRouter = () => {
   return (
-    <Router basename="/hito2proyectofinal">
+    <Router basename="/hito2proyectofinal/tienda-total">
       <Navbar />
       <div className="container mt-4">
         <Routes>
