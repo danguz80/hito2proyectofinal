@@ -12,7 +12,7 @@ import "../index.css"; // Asegurar que los estilos globales se aplican
 
 const AppRouter = () => {
   return (
-    <Router>
+    <Router basename="/hito2proyectofinal">
       <Navbar />
       <div className="container mt-4">
         <Routes>
