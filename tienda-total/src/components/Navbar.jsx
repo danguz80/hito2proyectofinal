@@ -7,7 +7,7 @@ const Navbar = () => {
     const { carrito } = useContext(CarritoContext);
 
     return (
-        <nav className="navbar navbar-expand-lg" style={{ backgroundColor: "#ffffff", borderBottom: "3px solid #006066" }}>
+        <nav className="navbar navbar-expand-lg fixed-top" style={{ backgroundColor: "#ffffff", borderBottom: "3px solid #006066", zIndex: "1030" }}>
             <div className="container-fluid">
                 <Link className="navbar-brand d-flex align-items-center" to="/">
                     <img src={logo} alt="Tienda Total" style={{ height: "70px", marginRight: "10px" }} />
@@ -24,8 +24,8 @@ const Navbar = () => {
                     <ul className="navbar-nav ms-auto">
                         <li className="nav-item"><Link className="nav-link text-dark" to="/">Inicio</Link></li>
                         <li className="nav-item"><Link className="nav-link text-dark" to="/productos">Productos</Link></li>
-                        <li className="nav-item">
-                            <Link className="nav-link position-relative text-dark" to="/carrito">
+                        <li className="nav-item position-relative">
+                            <Link className="nav-link text-dark" to="/carrito">
                                 🛒 Carrito
                                 {carrito.length > 0 && (
                                     <span className="badge bg-danger position-absolute top-0 start-100 translate-middle rounded-pill">

@@ -9,6 +9,7 @@
 
 /* Reset y estructura */
 body {
+  padding-top: 80px; /* Ajusta este valor si el navbar es más alto */
   margin: 0;
   background-color: var(--secondary-color);
   color: var(--text-color);
@@ -83,6 +84,19 @@ body {
 .card-text {
   color: var(--primary-color);
   font-weight: bold;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.card-body {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 /* Footer */

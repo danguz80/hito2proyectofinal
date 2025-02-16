@@ -14,6 +14,7 @@ export const CarritoProvider = ({ children }) => {
   };
 
   const [carrito, setCarrito] = useState(obtenerCarritoInicial);
+  const [mensaje, setMensaje] = useState(""); // Estado para el mensaje de éxito
 
   useEffect(() => {
     try {
@@ -26,6 +27,8 @@ export const CarritoProvider = ({ children }) => {
   // Función para agregar un producto al carrito
   const agregarAlCarrito = (producto) => {
     setCarrito((prevCarrito) => [...prevCarrito, producto]);
+    setMensaje("Producto agregado exitosamente ✅"); // Mostrar mensaje de éxito
+    setTimeout(() => setMensaje(""), 2000); // Ocultar mensaje después de 2 segundos
   };
 
   // Función para eliminar un producto específico del carrito
@@ -40,7 +43,7 @@ export const CarritoProvider = ({ children }) => {
   };
 
   return (
-    <CarritoContext.Provider value={{ carrito, agregarAlCarrito, eliminarDelCarrito, vaciarCarrito }}>
+    <CarritoContext.Provider value={{ carrito, agregarAlCarrito, eliminarDelCarrito, vaciarCarrito, mensaje }}>
       {children}
     </CarritoContext.Provider>
   );
