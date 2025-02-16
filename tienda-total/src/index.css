@@ -1,68 +1,109 @@
+/* Variables de color */
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --primary-color: #006066; /* Verde del logo */
+  --secondary-color: #f8f9fa; /* Crema claro */
+  --text-color: #333;
+  --hover-color: #004d4d; /* Verde más oscuro para hover */
+  --border-color: #005050; /* Verde oscuro para bordes */
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
+/* Reset y estructura */
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+  font-family: "Inter", system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+/* Navbar */
+.navbar {
+  background-color: white !important;
+  border-bottom: 3px solid var(--primary-color);
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
+.navbar-brand span {
+  color: var(--primary-color);
+  font-weight: bold;
+}
+
+.navbar-brand img {
+  height: 70px !important; /* Asegurar que el logo mantenga el nuevo tamaño */
+}
+
+/* Enlaces del Navbar */
+.navbar-nav .nav-link {
+  color: var(--primary-color) !important;
   font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+.navbar-nav .nav-link:hover {
+  color: var(--hover-color) !important;
+}
+
+/* Hero Section */
+.hero-section {
+  background-color: var(--primary-color) !important;
+  color: white !important;
+  text-align: center;
+  padding: 50px 0;
+}
+
+.hero-section h1 {
+  font-size: 2.5rem;
+}
+
+.hero-section p {
+  font-size: 1.2rem;
+}
+
+/* Botones */
+.btn-primary {
+  background-color: var(--primary-color) !important;
+  border-color: var(--primary-color) !important;
+  color: white !important;
+}
+
+.btn-primary:hover {
+  background-color: var(--hover-color) !important;
+  border-color: var(--hover-color) !important;
+}
+
+/* Tarjetas de productos */
+.card {
+  border: 1px solid var(--border-color);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  background-color: white;
+}
+
+.card-title {
+  font-weight: bold;
+}
+
+.card-text {
+  color: var(--primary-color);
+  font-weight: bold;
+}
+
+/* Footer */
+.footer {
+  background-color: var(--primary-color);
+  color: white;
+  text-align: center;
+  padding: 15px;
+}
+
+/* Botón especial del Header */
+.btn-header {
+  background-color: var(--secondary-color) !important; /* Crema */
+  color: var(--primary-color) !important; /* Verde */
+  font-weight: bold;
+  border: 2px solid var(--primary-color) !important;
+  transition: all 0.3s ease-in-out;
+}
+
+.btn-header:hover {
+  background-color: #009688 !important; /* Verde más claro */
+  color: white !important;
+  border: 2px solid #009688 !important;
 }

@@ -4,6 +4,7 @@ import AppRouter from "./routes/AppRouter";
 import { CarritoProvider } from "./context/CarritoContext";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import "./index.css"; // IMPORTANTE: Asegurar que este archivo esté importado
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
