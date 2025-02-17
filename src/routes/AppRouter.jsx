@@ -7,7 +7,7 @@ import Carrito from "../pages/Carrito";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import NotFound from "../pages/NotFound";
-import "../index.css"; // Asegurar que los estilos globales se aplican
+import "../index.css";
 
 const AppRouter = () => {
   return (

@@ -9,7 +9,7 @@
 
 /* Reset y estructura */
 body {
-  padding-top: 80px; /* Ajusta este valor si el navbar es más alto */
+  padding-top: 80px;
   margin: 0;
   background-color: var(--secondary-color);
   color: var(--text-color);

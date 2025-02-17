@@ -8,7 +8,7 @@ import Carrito from "./pages/Carrito";
 import Login from "./pages/Login";
 import Registro from "./pages/Registro";
 import NotFound from "./pages/NotFound";
-import "./index.css"; // Asegurar que los estilos se cargan
+import "./index.css"; 
 
 function App() {
   return (

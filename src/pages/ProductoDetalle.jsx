@@ -24,7 +24,7 @@ import img18 from "../assets/imgs/SIERRA CLADORA INAL 20V.png";
 import img19 from "../assets/imgs/SOPLADOR ASPIRADOR INAL FULL 20V.jpg"
 import img20 from "../assets/imgs/VIBRADOR CONCRETO INAL 20V.jpg";
 
-// Array de productos con información detallada (Nombres corregidos para coincidir con Productos.jsx)
+// Array de productos con información detallada
 const productos = [
   {
     id: 1, nombre: "Taladro inalámbrico a 45NM 20V TOTAL", precio: 21840, imagen: img1, descripcion: 

@@ -3,8 +3,8 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
-  base: '/hito2proyectofinal/', // Asegura la ruta base correcta en GitHub Pages
+  base: '/hito2proyectofinal/',
   build: {
-    outDir: 'dist', // Carpeta de salida de la compilación
+    outDir: 'dist',
   },
 });
