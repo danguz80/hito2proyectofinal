@@ -5,13 +5,17 @@ import { obtenerCarrito, agregarAlCarrito, actualizarCantidad, eliminarDelCarrit
 export const CarritoContext = createContext();
 
 export const CarritoProvider = ({ children }) => {
-  const { user } = useContext(AuthContext);
+  const authContext = useContext(AuthContext); // 🔥 Verifica si AuthContext está disponible
+  const user = authContext?.user || null; // 🔥 Evita error si `user` no está definido
   const [carrito, setCarrito] = useState([]);
   const [mensaje, setMensaje] = useState("");
 
   // 📌 Función para obtener el carrito desde el backend
   const fetchCarrito = async () => {
-    if (!user) return;
+    if (!user) {
+      setCarrito([]); // 🔥 Si no hay usuario, vaciar carrito
+      return;
+    }
 
     try {
       console.log("🛍️ Obteniendo carrito desde el backend...");
@@ -89,25 +93,27 @@ export const CarritoProvider = ({ children }) => {
       console.error("❌ Error al vaciar carrito:", error);
     }
   };
-    // 📌 🔥 Función para calcular la cantidad total de productos en el carrito
-    const obtenerCantidadTotal = () => {
-      return carrito.reduce((total, producto) => total + (producto.cantidad || 1), 0);
-    };
 
-    return (
-      <CarritoContext.Provider 
-        value={{ 
-          carrito, 
-          agregarProducto, 
-          actualizarCantidadProducto, 
-          eliminarProducto, 
-          vaciarCarritoCompleto, 
-          obtenerCantidadTotal, // 🔥 Asegurar que esté disponible 
-          mensaje 
-        }}
-      >
-        {children}
-      </CarritoContext.Provider>
-    );
-    
+  // 📌 🔥 Función para calcular la cantidad total de productos en el carrito
+  const obtenerCantidadTotal = () => {
+    return carrito.reduce((total, producto) => total + (producto.cantidad || 1), 0);
+  };
+
+  return (
+    <CarritoContext.Provider 
+      value={{ 
+        carrito, 
+        setCarrito,  // 🔥 Permite modificar el carrito desde AuthContext
+        fetchCarrito, // 🔥 Permite recuperar el carrito al iniciar sesión
+        agregarProducto, 
+        actualizarCantidadProducto, 
+        eliminarProducto, 
+        vaciarCarritoCompleto, 
+        obtenerCantidadTotal, // 🔥 Asegurar que esté disponible 
+        mensaje 
+      }}
+    >
+      {children}
+    </CarritoContext.Provider>
+  );
 };

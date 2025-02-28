@@ -4,7 +4,14 @@ const pool = require("../config/db");
 const obtenerProductos = async (req, res) => {
     try {
         const result = await pool.query("SELECT * FROM productos");
-        res.json(result.rows);
+
+        // 🔥 Aseguramos que las rutas de imagen sean correctas (eliminamos `/` inicial)
+        const productos = result.rows.map(producto => ({
+            ...producto,
+            imagen: producto.imagen.startsWith("/") ? producto.imagen.slice(1) : producto.imagen,
+        }));
+
+        res.json(productos);
     } catch (error) {
         console.error("Error al obtener productos:", error);
         res.status(500).json({ error: "Error al obtener productos" });

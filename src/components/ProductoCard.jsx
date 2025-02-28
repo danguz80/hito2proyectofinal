@@ -3,29 +3,41 @@ import { Link } from "react-router-dom";
 import { CarritoContext } from "../context/CarritoContext";
 
 const ProductoCard = ({ producto, onEliminar }) => {
-  const { agregarAlCarrito, mensaje } = useContext(CarritoContext);
+  const { agregarProducto } = useContext(CarritoContext);
   const [mostrarMensaje, setMostrarMensaje] = useState(false);
 
+  // 🔥 Construcción correcta de la URL de la imagen
+  const imageSrc = producto.imagen
+    ? `${import.meta.env.BASE_URL}${producto.imagen.replace(/^\//, "")}`
+    : `${import.meta.env.BASE_URL}default.jpg`; // Imagen por defecto
+
   const handleAgregar = () => {
-    agregarAlCarrito(producto);
+    agregarProducto(producto);
     setMostrarMensaje(true);
-    setTimeout(() => setMostrarMensaje(false), 2000); // Oculta el mensaje después de 2s
+    setTimeout(() => setMostrarMensaje(false), 2000);
   };
 
   return (
     <div className="col-lg-3 col-md-4 col-sm-6 mb-3">
       <div className="card h-100 shadow">
         <img
-          src={producto.image}
+          src={`${import.meta.env.BASE_URL}${producto.imagen}`}
+          alt={producto.nombre}
           className="card-img-top img-fluid p-3"
-          alt={producto.title}
           style={{ height: "220px", objectFit: "contain" }}
         />
+
+
+
         <div className="card-body text-center d-flex flex-column">
-          <h5 className="card-title">{producto.title}</h5>
-          <p className="card-text text-success fw-bold">${producto.price}</p>
+          <h5 className="card-title">{producto.nombre}</h5>
+          <p className="card-text text-success fw-bold">${producto.precio}</p>
+
           {onEliminar ? (
-            <button className="btn btn-outline-danger mt-auto" onClick={() => onEliminar(producto.id)}>
+            <button
+              className="btn btn-outline-danger mt-auto"
+              onClick={() => onEliminar(producto.id)}
+            >
               Eliminar ❌
             </button>
           ) : (

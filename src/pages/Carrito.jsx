@@ -67,11 +67,12 @@ const Carrito = () => {
               <div key={idProducto} className="col-lg-4 col-md-6 col-sm-12 mb-4">
                 <div className="card h-100 shadow p-3">
                   <img
-                    src={producto.imagen}
-                    className="card-img-top img-fluid"
+                    src={`${import.meta.env.BASE_URL}${producto.imagen.replace(/^\//, "")}`} // 🔥 Elimina el `/` inicial si está presente
                     alt={producto.nombre}
-                    style={{ height: "200px", objectFit: "contain" }}
+                    className="card-img-top img-fluid p-3"
+                    style={{ height: "220px", objectFit: "contain" }}
                   />
+
                   <div className="card-body text-center d-flex flex-column">
                     <h5 className="card-title">{producto.nombre}</h5>
                     <p className="card-text text-success fw-bold">
