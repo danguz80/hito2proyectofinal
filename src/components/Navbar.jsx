@@ -1,10 +1,12 @@
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { CarritoContext } from "../context/CarritoContext";
+import { AuthContext } from "../context/AuthContext"; // Importamos el contexto de autenticación
 import logo from "../assets/logo.png";
 
 const Navbar = () => {
-    const { carrito } = useContext(CarritoContext);
+    const { carrito, obtenerCantidadTotal } = useContext(CarritoContext); // 🔥 Obtener función desde el contexto
+    const { user, logout } = useContext(AuthContext); // Obtenemos el usuario y la función de logout
 
     return (
         <nav className="navbar navbar-expand-lg fixed-top" style={{ backgroundColor: "#ffffff", borderBottom: "3px solid #006066", zIndex: "1030" }}>
@@ -29,13 +31,28 @@ const Navbar = () => {
                                 🛒 Carrito
                                 {carrito.length > 0 && (
                                     <span className="badge bg-danger position-absolute top-0 start-100 translate-middle rounded-pill">
-                                        {carrito.length}
-                                    </span>
+                                    {obtenerCantidadTotal()} {/* 🔥 Usar la función correctamente */}
+                                </span>                                
                                 )}
                             </Link>
                         </li>
-                        <li className="nav-item"><Link className="nav-link text-dark" to="/login">Login</Link></li>
-                        <li className="nav-item"><Link className="nav-link text-dark" to="/register">Registro</Link></li>
+
+                        {/* Si el usuario está autenticado, mostrar "Profile" y "Cerrar Sesión" */}
+                        {user ? (
+                            <>
+                                <li className="nav-item">
+                                    <Link className="nav-link text-dark" to="/profile">👤 {user.name}</Link>
+                                </li>
+                                <li className="nav-item">
+                                    <button className="nav-link btn btn-link text-dark" onClick={logout}>Cerrar Sesión</button>
+                                </li>
+                            </>
+                        ) : (
+                            <>
+                                <li className="nav-item"><Link className="nav-link text-dark" to="/login">Login</Link></li>
+                                <li className="nav-item"><Link className="nav-link text-dark" to="/register">Registro</Link></li>
+                            </>
+                        )}
                     </ul>
                 </div>
             </div>
