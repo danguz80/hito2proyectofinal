@@ -1,3 +1,6 @@
+import { getAuthHeaders } from "../services/api"; 
+const API_URL = import.meta.env.VITE_API_URL;
+import axios from "axios";
 import { createContext, useState, useEffect, useContext } from "react";
 import { AuthContext } from "./AuthContext";
 import { obtenerCarrito, agregarAlCarrito, actualizarCantidad, eliminarDelCarrito, vaciarCarrito } from "../services/api";
@@ -29,8 +32,19 @@ export const CarritoProvider = ({ children }) => {
 
   // 📌 Cargar el carrito cuando el usuario cambia
   useEffect(() => {
-    fetchCarrito();
-  }, [user]);
+    const obtenerCarrito = async () => {
+      try {
+        const response = await axios.get(`${API_URL}/carrito`, { headers: getAuthHeaders() });
+        console.log("📦 Carrito recibido:", response.data); // 👈 Aquí verificamos los datos
+        setCarrito(response.data);
+      } catch (error) {
+        console.error("❌ Error al obtener carrito:", error);
+      }
+    };
+
+    obtenerCarrito();
+  }, []);
+
 
   // 📌 Agregar un producto al carrito
   const agregarProducto = async (producto, cantidad = 1) => {
@@ -100,17 +114,17 @@ export const CarritoProvider = ({ children }) => {
   };
 
   return (
-    <CarritoContext.Provider 
-      value={{ 
-        carrito, 
+    <CarritoContext.Provider
+      value={{
+        carrito,
         setCarrito,  // 🔥 Permite modificar el carrito desde AuthContext
         fetchCarrito, // 🔥 Permite recuperar el carrito al iniciar sesión
-        agregarProducto, 
-        actualizarCantidadProducto, 
-        eliminarProducto, 
-        vaciarCarritoCompleto, 
+        agregarProducto,
+        actualizarCantidadProducto,
+        eliminarProducto,
+        vaciarCarritoCompleto,
         obtenerCantidadTotal, // 🔥 Asegurar que esté disponible 
-        mensaje 
+        mensaje
       }}
     >
       {children}

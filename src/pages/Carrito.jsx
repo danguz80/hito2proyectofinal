@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { CarritoContext } from "../context/CarritoContext";
 
 const Carrito = () => {
-  const { carrito, eliminarProducto, vaciarCarritoCompleto, actualizarCantidadProducto, mensaje } = useContext(CarritoContext);
+  const { carrito, eliminarProducto, vaciarCarritoCompleto, actualizarCantidadProducto } = useContext(CarritoContext);
   const [cantidades, setCantidades] = useState({});
 
   // 📌 Cargar las cantidades iniciales cuando cambia el carrito
@@ -15,9 +15,8 @@ const Carrito = () => {
 
     const cantidadesIniciales = {};
     carrito.forEach((producto) => {
-      // Validar que el producto tenga un ID válido
       if (producto?.producto_id || producto?.id) {
-        const idProducto = producto.producto_id || producto.id; // Usar el ID correcto
+        const idProducto = producto.producto_id || producto.id;
         cantidadesIniciales[idProducto] = producto.cantidad || 1;
       } else {
         console.error("❌ Error: Producto sin ID detectado en el carrito:", producto);
@@ -25,25 +24,65 @@ const Carrito = () => {
     });
 
     setCantidades(cantidadesIniciales);
-    console.log("🔍 Estado actualizado del carrito:", carrito);
   }, [carrito]);
 
   // 📌 Función para calcular el total del carrito
   const calcularTotal = () => {
     return carrito.reduce((total, producto) => {
-      const idProducto = producto.producto_id || producto.id; // Asegurar ID correcto
+      const idProducto = producto.producto_id || producto.id;
       const cantidad = cantidades[idProducto] || 1;
       return total + producto.precio * cantidad;
     }, 0);
   };
 
-  console.log("🔍 Estado actual del carrito:", carrito);
+  // 📌 Finalizar compra y redirigir a la "Plataforma de Pago"
+  const handleFinalizarCompra = () => {
+    if (window.confirm("Serás redirigido a una página externa para realizar el pago.")) {
+      const pagoWindow = window.open("", "_blank");
+
+      if (pagoWindow) {
+        pagoWindow.document.write(`
+          <html>
+            <head>
+              <title>Plataforma de Pago</title>
+              <style>
+                body { text-align: center; font-family: Arial, sans-serif; padding: 50px; }
+                button { background-color: green; color: white; padding: 10px 20px; border: none; cursor: pointer; font-size: 18px; }
+                button:hover { background-color: darkgreen; }
+              </style>
+            </head>
+            <body>
+              <h1>Plataforma de Pago</h1>
+              <p>Presiona el botón para confirmar tu compra.</p>
+              <button id="btnComprar">Comprar</button>
+              <script>
+                document.getElementById("btnComprar").addEventListener("click", function() {
+                  alert("✅ Compra realizada con éxito.");
+                  window.opener.postMessage("compraExitosa", "*");
+                  window.close();
+                });
+              </script>
+            </body>
+          </html>
+        `);
+      }
+    }
+  };
+
+  // 📌 Vaciar carrito después de la compra exitosa
+  useEffect(() => {
+    const handleMessage = (event) => {
+      if (event.data === "compraExitosa") {
+        vaciarCarritoCompleto();
+      }
+    };
+    window.addEventListener("message", handleMessage);
+    return () => window.removeEventListener("message", handleMessage);
+  }, []);
 
   return (
     <div className="container my-5">
       <h2 className="text-center mb-4">🛒 Carrito de Compras</h2>
-
-      {mensaje && <div className="alert alert-success text-center fade show">{mensaje}</div>}
 
       {carrito.length > 0 && (
         <div className="d-flex justify-content-between mb-3">
@@ -56,18 +95,18 @@ const Carrito = () => {
       ) : (
         <div className="row">
           {carrito.map((producto) => {
-            const idProducto = producto.producto_id || producto.id; // Asegurar ID correcto
+            const idProducto = producto.producto_id || producto.id;
 
             if (!idProducto) {
               console.error("❌ Producto sin ID detectado en el carrito:", producto);
-              return null; // Evitar renderizar productos sin ID
+              return null;
             }
 
             return (
               <div key={idProducto} className="col-lg-4 col-md-6 col-sm-12 mb-4">
                 <div className="card h-100 shadow p-3">
                   <img
-                    src={`${import.meta.env.BASE_URL}${producto.imagen.replace(/^\//, "")}`} // 🔥 Elimina el `/` inicial si está presente
+                    src={`${import.meta.env.BASE_URL}${producto.imagen.replace(/^\//, "")}`}
                     alt={producto.nombre}
                     className="card-img-top img-fluid p-3"
                     style={{ height: "220px", objectFit: "contain" }}
@@ -94,10 +133,7 @@ const Carrito = () => {
                     </div>
                     <button
                       className="btn btn-outline-danger mt-2"
-                      onClick={() => {
-                        console.log(`🛑 Intentando eliminar producto con ID: ${idProducto}`);
-                        eliminarProducto(idProducto);
-                      }}
+                      onClick={() => eliminarProducto(idProducto)}
                     >
                       Eliminar ❌
                     </button>
@@ -114,6 +150,9 @@ const Carrito = () => {
           <h4>Total:{" "}
             {new Intl.NumberFormat("es-CL", { style: "currency", currency: "CLP" }).format(calcularTotal())}
           </h4>
+          <button className="btn btn-success mt-3" onClick={handleFinalizarCompra}>
+            Finalizar Compra 🏦
+          </button>
         </div>
       )}
     </div>
