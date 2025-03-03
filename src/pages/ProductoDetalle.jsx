@@ -13,7 +13,7 @@ const ProductoDetalle = () => {
 
     useEffect(() => {
         console.log("Obteniendo producto con ID:", id);  // 👈 Verificar en consola
-        fetch(`https://crispy-cod-w5jw7gv9676cgj5-5000.app.github.dev/api/productos/${id}`)
+        fetch(`http://localhost:5001/api/productos/${id}`)
             .then((res) => {
                 if (!res.ok) {
                     throw new Error("Error al obtener el producto");
@@ -42,7 +42,16 @@ const ProductoDetalle = () => {
         <div className="container my-5">
             <div className="row">
                 <div className="col-md-6">
-                    <img src={producto.imagen} className="img-fluid" alt={producto.nombre} />
+                    <img
+                        src={`http://localhost:5001/public/${producto.imagen}`}
+                        className="img-fluid"
+                        alt={producto.nombre}
+                        onError={(e) => {
+                            e.target.onerror = null;
+                            e.target.src = "https://via.placeholder.com/250?text=Sin+Imagen";
+                        }}
+                    />
+
                 </div>
                 <div className="col-md-6">
                     <h2>{producto.nombre}</h2>

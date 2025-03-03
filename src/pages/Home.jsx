@@ -5,7 +5,7 @@ const Home = () => {
   const [productos, setProductos] = useState([]);
 
   useEffect(() => {
-    fetch("https://crispy-cod-w5jw7gv9676cgj5-5000.app.github.dev/api/productos")
+    fetch("http://localhost:5001/api/productos") // ⚠️ Asegúrate de que esta URL es correcta
       .then((res) => res.json())
       .then((data) => {
         console.log("Productos cargados:", data); // 👈 Verificar en la consola
@@ -36,13 +36,11 @@ const Home = () => {
             <div key={producto.id} className="col-lg-3 col-md-4 col-sm-6 mb-3">
               <div className="card h-100 shadow">
                 <img
-                  src={producto.imagen}
+                  src={`http://localhost:5001/public/${producto.imagen}`} // ✅ Corrige la URL de la imagen
                   className="card-img-top img-fluid p-3"
                   alt={producto.nombre}
                   style={{ height: "250px", objectFit: "contain" }}
                 />
-
-
 
                 <div className="card-body text-center d-flex flex-column">
                   <h5 className="card-title">{producto.nombre}</h5>

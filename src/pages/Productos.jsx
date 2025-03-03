@@ -1,20 +1,19 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { CarritoContext } from "../context/CarritoContext";
-import { AuthContext } from "../context/AuthContext"; // 🔥 Importamos el contexto de autenticación
+import { AuthContext } from "../context/AuthContext";
 
 const Productos = () => {
-  const { agregarProducto, mensaje } = useContext(CarritoContext); // 🔥 Se usa agregarProducto en vez de agregarAlCarrito
-  const { user } = useContext(AuthContext); // 🔥 Obtener el usuario autenticado
+  const { agregarProducto, mensaje } = useContext(CarritoContext);
+  const { user } = useContext(AuthContext);
   const [productos, setProductos] = useState([]);
-  const navigate = useNavigate(); // 🔥 Para redirigir a la página de edición
+  const navigate = useNavigate();
 
-  // Petición al backend para obtener los productos
   useEffect(() => {
-    fetch("https://crispy-cod-w5jw7gv9676cgj5-5000.app.github.dev/api/productos")
+    fetch(`${import.meta.env.VITE_API_URL}/productos`)
       .then((res) => res.json())
       .then((data) => {
-        console.log("Productos cargados:", data); // Verificar en la consola
+        console.log("Productos cargados:", data);
         setProductos(data);
       })
       .catch((error) => console.error("Error al cargar productos:", error));
@@ -22,7 +21,6 @@ const Productos = () => {
 
   return (
     <div className="container my-5">
-      {/* Mensaje flotante en la parte superior */}
       {mensaje && (
         <div className="alert alert-success text-center fixed-top w-50 mx-auto mt-3" style={{ zIndex: "1050" }}>
           {mensaje}
@@ -39,15 +37,18 @@ const Productos = () => {
             <div key={producto.id} className="col-lg-3 col-md-4 col-sm-6 mb-3">
               <div className="card h-100 shadow">
                 <img
-                  src={producto.imagen}
+                  src={`http://localhost:5001/public/${producto.imagen}`}
                   className="card-img-top img-fluid p-3"
                   alt={producto.nombre}
                   style={{ height: "250px", objectFit: "contain" }}
                   onError={(e) => {
+                    console.log("❌ Imagen no encontrada:", e.target.src);
                     e.target.onerror = null;
-                    e.target.src = "https://via.placeholder.com/250x250?text=Imagen+No+Disponible";
+                    e.target.src = "https://via.placeholder.com/250x250.png?text=Sin+Imagen";
                   }}
                 />
+
+
                 <div className="card-body text-center d-flex flex-column">
                   <h5 className="card-title">{producto.nombre}</h5>
                   <p className="card-text text-success fw-bold">
@@ -57,7 +58,6 @@ const Productos = () => {
                     🛒 Agregar al Carrito
                   </button>
                   <Link to={`/producto/${producto.id}`} className="btn btn-primary">Ver Más</Link>
-                  {/* 🔥 Solo mostrar el botón de modificar si el usuario está autenticado */}
                   {user && (
                     <button
                       onClick={() => navigate(`/edit-product/${producto.id}`)}
