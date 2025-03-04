@@ -13,7 +13,7 @@ import "../index.css";
 
 const AppRouter = () => {
   return (
-    <Router basename="/hito2proyectofinal">
+    <Router> {/* ❌ Eliminamos basename */}
       <Navbar />
       <div className="container mt-4">
         <Routes>
