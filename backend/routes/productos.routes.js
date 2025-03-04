@@ -4,9 +4,11 @@ const {
   agregarProducto, 
   obtenerProductoPorId, 
   actualizarProducto, 
-  eliminarProducto 
+  eliminarProducto,
+  actualizarOferta,  // 🔥 Nueva función en el controlador
+  obtenerProductosDestacados // 🔥 Nueva función en el controlador
 } = require("../controllers/productos.controller");
-const authMiddleware = require("../middlewares/authMiddleware"); // 🔥 Importamos correctamente el middleware
+const authMiddleware = require("../middlewares/authMiddleware");
 
 const router = express.Router();
 
@@ -21,6 +23,9 @@ const verificarAdmin = (req, res, next) => {
 // 📌 Obtener todos los productos
 router.get("/", obtenerProductos);
 
+// 📌 Obtener los 3 productos con mayor oferta
+router.get("/destacados", obtenerProductosDestacados);
+
 // 📌 Obtener un producto por ID
 router.get("/:id", obtenerProductoPorId);
 
@@ -29,6 +34,9 @@ router.post("/", authMiddleware, verificarAdmin, agregarProducto);
 
 // 📌 Actualizar producto (Solo administradores)
 router.put("/:id", authMiddleware, verificarAdmin, actualizarProducto);
+
+// 📌 Actualizar la oferta de un producto (Solo administradores)
+router.put("/:id/oferta", authMiddleware, verificarAdmin, actualizarOferta);  // 🔥 Nueva ruta
 
 // 📌 Eliminar producto (Solo administradores)
 router.delete("/:id", authMiddleware, verificarAdmin, eliminarProducto);
