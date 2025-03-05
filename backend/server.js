@@ -18,6 +18,11 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(morgan("dev"));
 
+app.get("/", (req, res) => {
+  res.send("Servidor en ejecución correctamente 🚀");
+});
+
+
 // 📌 Servir archivos estáticos desde la carpeta `public`
 const path = require("path");
 app.use("/public", express.static(path.join(__dirname, "../public")));
