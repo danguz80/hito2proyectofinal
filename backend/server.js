@@ -8,7 +8,10 @@ const app = express();
 
 // 🔥 Configuración de CORS para permitir solicitudes solo desde el frontend
 const corsOptions = {
-  origin: process.env.FRONTEND_URL || "http://localhost:5173",
+  origin: [
+    "https://earnest-puffpuff-9eeb40.netlify.app", // ✅ URL del frontend en Netlify
+    "http://localhost:5173" // ✅ Mantenerlo para desarrollo local
+  ],
   methods: "GET,POST,PUT,DELETE",
   allowedHeaders: "Content-Type,Authorization",
   credentials: true,
@@ -32,7 +35,7 @@ app.use("/api/auth", require("./routes/auth.routes"));
 
 // 📌 Rutas Protegidas (requieren autenticación)
 app.use("/api/productos", require("./routes/productos.routes"));
-app.use("/api/carrito", authMiddleware, require("./routes/carrito.routes"));  
+app.use("/api/carrito", authMiddleware, require("./routes/carrito.routes"));
 app.use("/api/usuarios", authMiddleware, require("./routes/usuarios.routes"));
 
 // 🔥 Iniciar el servidor solo si no estamos ejecutando pruebas
