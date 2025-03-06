@@ -13,10 +13,10 @@ const Productos = () => {
     fetch(`${import.meta.env.VITE_API_URL}/productos`)
       .then((res) => res.json())
       .then((data) => {
-        console.log("Productos cargados:", data);
+        console.log("✅ Productos cargados:", data);
         setProductos(data);
       })
-      .catch((error) => console.error("Error al cargar productos:", error));
+      .catch((error) => console.error("❌ Error al cargar productos:", error));
   }, []);
 
   return (
@@ -39,11 +39,19 @@ const Productos = () => {
               ? producto.precio - (producto.precio * producto.oferta / 100)
               : producto.precio;
 
+            // 🔹 Verificar si la URL de la imagen es válida
+            let imageUrl = producto.imagen;
+            if (!imageUrl.startsWith("http")) {
+              imageUrl = `${import.meta.env.VITE_API_URL}/public/${producto.imagen.replace(/^\/+/, "")}`;
+            }
+
+            console.log(`🖼️ Imagen procesada para ${producto.nombre}:`, imageUrl);
+
             return (
               <div key={producto.id} className="col-lg-3 col-md-4 col-sm-6 mb-3">
                 <div className="card h-100 shadow">
                   <img
-                    src={producto.imagen}  // VITE_API_URL
+                    src={imageUrl}
                     className="card-img-top img-fluid p-3"
                     alt={producto.nombre}
                     style={{ height: "250px", objectFit: "contain" }}
@@ -71,7 +79,6 @@ const Productos = () => {
                         <span className="badge bg-danger text-white p-2 mb-2 d-inline-block">
                           🔥 {producto.oferta}% OFF
                         </span>
-
                       </p>
                     ) : (
                       <p className="card-text text-success fw-bold">
