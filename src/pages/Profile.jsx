@@ -54,7 +54,7 @@ const Profile = () => {
             return;
           }
 
-          const res = await fetch("http://localhost:5001/api/usuarios", {
+          const res = await fetch("https://hito2proyectofinal.onrender.com/api/usuarios", {
             headers: { Authorization: `Bearer ${token}` }
           });
 

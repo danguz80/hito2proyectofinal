@@ -5,7 +5,7 @@ const Home = () => {
   const [productos, setProductos] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5001/api/productos/destacados") // ✅ API para productos con mayor oferta
+    fetch("https://hito2proyectofinal.onrender.com/api/productos/destacados") // ✅ API para productos con mayor oferta
       .then((res) => res.json())
       .then((data) => {
         console.log("Productos destacados cargados:", data);

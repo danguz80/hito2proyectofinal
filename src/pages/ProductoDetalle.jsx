@@ -13,7 +13,7 @@ const ProductoDetalle = () => {
 
     useEffect(() => {
         console.log("Obteniendo producto con ID:", id);  // 👈 Verificar en consola
-        fetch(`http://localhost:5001/api/productos/${id}`)
+        fetch("https://hito2proyectofinal.onrender.com/api/productos/${id}")
             .then((res) => {
                 if (!res.ok) {
                     throw new Error("Error al obtener el producto");
