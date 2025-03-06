@@ -43,7 +43,7 @@ const Productos = () => {
               <div key={producto.id} className="col-lg-3 col-md-4 col-sm-6 mb-3">
                 <div className="card h-100 shadow">
                   <img
-                    src={`http://localhost:5001/public/${producto.imagen}`}
+                    src={`${import.meta.env.VITE_API_URL}/public/${producto.imagen}`}
                     className="card-img-top img-fluid p-3"
                     alt={producto.nombre}
                     style={{ height: "250px", objectFit: "contain" }}
